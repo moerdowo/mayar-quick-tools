@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mayar Quick Tools</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="brand-bar">
+      <img class="brand-logo" src="../icons/logo.png" alt="Mayar" />
+      <button id="brand-dashboard" class="brand-dashboard" type="button">
+        Dashboard
+        <span class="brand-dashboard-arrow" aria-hidden="true">↗</span>
+      </button>
+    </div>
+
+    <header class="tabs" role="tablist">
+      <button class="tab active" data-tab="qris" role="tab">QRIS</button>
+      <button class="tab" data-tab="payment" role="tab">PayReq</button>
+      <button class="tab" data-tab="invoice" role="tab">Invoice</button>
+      <button class="tab" data-tab="tx" role="tab">Transactions</button>
+      <button id="open-options" class="icon-btn" title="Settings" aria-label="Settings">
+        ⚙
+      </button>
+    </header>
+
+    <div id="no-key-banner" class="banner hidden">
+      No API key yet —
+      <a href="#" id="open-options-link">open settings</a> to add one.
+    </div>
+
+    <!-- ============ QRIS (calculator) ============ -->
+    <section id="tab-qris" class="tab-panel active">
+      <div id="qris-input" class="calc">
+        <div class="calc-display">
+          <span class="calc-currency">Rp</span>
+          <span id="calc-amount" class="calc-amount">0</span>
+        </div>
+        <div class="calc-keys">
+          <button class="key key-fn key-ac key-span-2" data-key="AC">AC</button>
+          <button class="key key-fn" data-key="DEL">⌫</button>
+
+          <button class="key" data-key="7">7</button>
+          <button class="key" data-key="8">8</button>
+          <button class="key" data-key="9">9</button>
+
+          <button class="key" data-key="4">4</button>
+          <button class="key" data-key="5">5</button>
+          <button class="key" data-key="6">6</button>
+
+          <button class="key" data-key="1">1</button>
+          <button class="key" data-key="2">2</button>
+          <button class="key" data-key="3">3</button>
+
+          <button class="key key-zero" data-key="0">0</button>
+        </div>
+        <button class="primary calc-generate" id="key-generate" data-key="GEN">
+          Create QRIS
+        </button>
+      </div>
+
+      <div id="qris-result" class="result hidden">
+        <div class="result-header">
+          <div class="result-amount">
+            <span class="muted">Amount</span>
+            <strong id="qris-amount-label">Rp 0</strong>
+          </div>
+          <button id="qris-new" class="link-btn">New</button>
+        </div>
+        <div class="qr-wrap">
+          <img id="qris-image" alt="QRIS code" />
+        </div>
+        <div class="actions">
+          <button id="qris-download" class="primary">Download QR</button>
+          <button id="qris-copy-url" class="secondary">Copy image URL</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Single Payment Request ============ -->
+    <section id="tab-payment" class="tab-panel">
+      <form id="payment-form" class="form" novalidate>
+        <label>
+          <span>Customer name</span>
+          <input name="name" type="text" required placeholder="Jane Doe" />
+        </label>
+        <label>
+          <span>Customer email</span>
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="customer@example.com"
+          />
+        </label>
+        <label>
+          <span>Mobile number</span>
+          <input name="mobile" type="tel" required placeholder="08xxxxxxxxxx" />
+        </label>
+        <label>
+          <span>Amount (Rp)</span>
+          <input
+            name="amount"
+            type="number"
+            min="1"
+            step="1"
+            required
+            placeholder="100000"
+          />
+        </label>
+        <label>
+          <span>Description <em class="muted">(optional)</em></span>
+          <textarea name="description" rows="2" placeholder="Optional"></textarea>
+        </label>
+        <p class="hint">Expires in 14 days from now.</p>
+        <button type="submit" class="primary">Create payment request</button>
+      </form>
+
+      <div id="payment-result" class="link-result hidden">
+        <label>
+          <span>Payment link</span>
+          <input id="payment-link" type="text" readonly />
+        </label>
+        <div class="actions">
+          <button id="payment-copy" class="primary">Copy link</button>
+          <button id="payment-open" class="secondary">Open</button>
+          <button id="payment-new" class="link-btn">New</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Invoice ============ -->
+    <section id="tab-invoice" class="tab-panel">
+      <form id="invoice-form" class="form" novalidate>
+        <label>
+          <span>Customer name</span>
+          <input name="name" type="text" required placeholder="Jane Doe" />
+        </label>
+        <label>
+          <span>Customer email</span>
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="customer@example.com"
+          />
+        </label>
+        <label>
+          <span>Mobile number</span>
+          <input name="mobile" type="tel" required placeholder="08xxxxxxxxxx" />
+        </label>
+        <label>
+          <span>Description <em class="muted">(optional)</em></span>
+          <input name="description" type="text" placeholder="Invoice for…" />
+        </label>
+        <label>
+          <span>Expires at</span>
+          <input name="expiredAt" type="datetime-local" required />
+        </label>
+
+        <div class="items">
+          <div class="items-header">
+            <span>Items</span>
+            <button type="button" id="invoice-add-item" class="link-btn">
+              + Add item
+            </button>
+          </div>
+          <div id="invoice-items"></div>
+        </div>
+
+        <div class="total-row">
+          <span>Total</span>
+          <strong id="invoice-total">Rp 0</strong>
+        </div>
+
+        <button type="submit" class="primary">Create invoice</button>
+      </form>
+
+      <div id="invoice-result" class="link-result hidden">
+        <label>
+          <span>Invoice link</span>
+          <input id="invoice-link" type="text" readonly />
+        </label>
+        <div class="actions">
+          <button id="invoice-copy" class="primary">Copy link</button>
+          <button id="invoice-open" class="secondary">Open</button>
+          <button id="invoice-new" class="link-btn">New</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Transactions ============ -->
+    <section id="tab-tx" class="tab-panel">
+      <div class="tx-balances">
+        <div class="balance-card balance-total">
+          <span class="balance-label">Total balance</span>
+          <strong id="bal-total">—</strong>
+        </div>
+        <div class="balance-row">
+          <div class="balance-card balance-active">
+            <span class="balance-label">Active</span>
+            <strong id="bal-active">—</strong>
+          </div>
+          <div class="balance-card balance-pending">
+            <span class="balance-label">Pending</span>
+            <strong id="bal-pending">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="tx-header">
+        <span>Recent paid transactions</span>
+        <button id="tx-refresh" class="link-btn" title="Refresh">↻ Refresh</button>
+      </div>
+
+      <div id="tx-list" class="tx-list"></div>
+
+      <div id="tx-empty" class="tx-empty hidden">No transactions yet.</div>
+      <div id="tx-error" class="tx-error hidden"></div>
+
+      <button id="tx-load-more" class="secondary tx-load-more hidden">
+        Load more
+      </button>
+    </section>
+
+    <template id="tx-item-template">
+      <div class="tx-item">
+        <div class="tx-main">
+          <div class="tx-customer"></div>
+          <div class="tx-meta">
+            <span class="tx-type"></span>
+            <span class="tx-dot">·</span>
+            <span class="tx-date"></span>
+          </div>
+        </div>
+        <div class="tx-amount"></div>
+      </div>
+    </template>
+
+    <div id="toast" class="toast hidden"></div>
+    <div id="loader" class="loader hidden">
+      <div class="spinner"></div>
+    </div>
+
+    <template id="invoice-item-template">
+      <div class="item-row">
+        <input
+          class="item-desc"
+          type="text"
+          placeholder="Item name / description"
+          required
+        />
+        <input
+          class="item-qty"
+          type="number"
+          min="1"
+          step="1"
+          value="1"
+          required
+        />
+        <input
+          class="item-rate"
+          type="number"
+          min="0"
+          step="1"
+          placeholder="Price"
+          required
+        />
+        <button type="button" class="item-remove icon-btn" title="Remove">
+          ✕
+        </button>
+      </div>
+    </template>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

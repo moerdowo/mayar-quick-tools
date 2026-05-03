@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mayar Quick Tools — Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Mayar Quick Tools</h1>
+      <p class="lede">
+        Set your Mayar API key and preferences. The key is stored in Chrome
+        sync storage and used only to call Mayar's API directly from your
+        browser.
+      </p>
+
+      <form id="settings-form">
+        <label class="field">
+          <span>API key</span>
+          <input
+            id="apiKey"
+            name="apiKey"
+            type="password"
+            autocomplete="off"
+            placeholder="Paste your Mayar API key"
+          />
+          <small>
+            Get this from your Mayar dashboard. Stored in Chrome sync storage.
+          </small>
+        </label>
+
+        <label class="field">
+          <span>Default redirect URL</span>
+          <input
+            id="redirectUrl"
+            name="redirectUrl"
+            type="url"
+            placeholder="https://mayar.id/"
+          />
+          <small>
+            Customers are redirected here after paying a request or invoice.
+          </small>
+        </label>
+
+        <label class="field">
+          <span>Theme</span>
+          <select id="theme" name="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="neon">Neon</option>
+            <option value="matrix">Matrix</option>
+            <option value="tokyo">Tokyo Night</option>
+            <option value="system">System (match OS)</option>
+          </select>
+          <small>Applies to the popup and this settings page.</small>
+        </label>
+
+        <div class="actions">
+          <button type="submit" class="primary">Save</button>
+          <span id="saved" class="saved hidden">Saved ✓</span>
+        </div>
+      </form>
+    </main>
+  </body>
+  <script type="module" src="options.js"></script>
+</html>

@@ -1,0 +1,200 @@
+* {
+  box-sizing: border-box;
+}
+
+:root,
+:root[data-theme="light"] {
+  --bg: #f6f7fb;
+  --panel: #ffffff;
+  --input-bg: #ffffff;
+  --border: #e2e5ed;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --primary: #0d53ef;
+  --primary-hover: #0a44c4;
+  --primary-soft: rgba(13, 83, 239, 0.15);
+  --secondary: #ec1f79;
+  --ok: #16a34a;
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --panel: #131c2e;
+  --input-bg: #0f1828;
+  --border: #243049;
+  --fg: #e8edf7;
+  --muted: #8a96b3;
+  --primary: #4d8bf5;
+  --primary-hover: #6b9ff8;
+  --primary-soft: rgba(77, 139, 245, 0.2);
+  --secondary: #f472b6;
+  --ok: #34d399;
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="neon"] {
+  --bg: #0a0014;
+  --panel: #15002b;
+  --input-bg: #11001f;
+  --border: #3d0080;
+  --fg: #f0e6ff;
+  --muted: #b388ff;
+  --primary: #00f0ff;
+  --primary-hover: #67f6ff;
+  --primary-soft: rgba(0, 240, 255, 0.2);
+  --secondary: #ff2bd6;
+  --ok: #39ff14;
+  --shadow-md: 0 0 24px rgba(255, 43, 214, 0.25);
+}
+
+:root[data-theme="matrix"] {
+  --bg: #000000;
+  --panel: #001a05;
+  --input-bg: #001505;
+  --border: #00521b;
+  --fg: #00ff66;
+  --muted: #4caf50;
+  --primary: #00ff66;
+  --primary-hover: #66ff99;
+  --primary-soft: rgba(0, 255, 102, 0.2);
+  --secondary: #00cc55;
+  --ok: #00ff66;
+  --shadow-md: 0 0 22px rgba(0, 255, 102, 0.2);
+}
+
+:root[data-theme="tokyo"] {
+  --bg: #1a1b26;
+  --panel: #24283b;
+  --input-bg: #1f2335;
+  --border: #414868;
+  --fg: #c0caf5;
+  --muted: #7982a9;
+  --primary: #7aa2f7;
+  --primary-hover: #9ab8fa;
+  --primary-soft: rgba(122, 162, 247, 0.2);
+  --secondary: #f7768e;
+  --ok: #9ece6a;
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+}
+
+main {
+  max-width: 540px;
+  margin: 60px auto;
+  padding: 28px 32px 32px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.lede {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.field > span {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.field input[type="text"],
+.field input[type="password"],
+.field input[type="url"],
+.field select {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--fg);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field select {
+  cursor: pointer;
+}
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+.field small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.field.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.field.checkbox > span {
+  color: var(--fg);
+  font-weight: 500;
+}
+.field.checkbox input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+button.primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+button.primary:hover {
+  background: var(--primary-hover);
+}
+
+.saved {
+  color: var(--ok);
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.hidden {
+  opacity: 0;
+}

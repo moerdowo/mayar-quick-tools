@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Local secrets / scratch
+.env
+.env.local
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts (none today, but pre-emptive)
+dist/
+build/
+*.zip
+*.crx
+*.pem
