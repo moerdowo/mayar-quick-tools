@@ -73,3 +73,7 @@ assets/                # screenshots
 
 No build step — vanilla JS modules. Reload the extension in
 `chrome://extensions` after editing.
+
+## License
+
+Released under the [MIT License](LICENSE).
